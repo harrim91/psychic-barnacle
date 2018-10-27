@@ -1,8 +1,4 @@
 import React from 'react';
-import Root from './src/components';
+import App from './src';
 
-const App = () => (
-  <Root text="Hello World" />
-);
-
-export default App;
+export default () => <App />;
