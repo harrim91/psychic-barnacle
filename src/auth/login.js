@@ -44,7 +44,7 @@ class Login extends React.Component {
   handleSubmit() {
     const { user } = this.state;
     const { onSetUser } = this.props;
-    axios.post('https://hackmcr-2018-api.herokuapp.com/login', user)
+    axios.post('https://hackmcr-2018-api.herokuapp.com/auth/login', user)
       .then((response) => {
         TokenManager.setToken(response.data.token)
           .then(() => TokenManager.getTokenPayload())

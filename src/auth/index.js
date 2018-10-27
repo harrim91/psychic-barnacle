@@ -4,6 +4,8 @@ import TokenManager from '../lib/token-manager';
 import SignUp from './sign-up';
 import Login from './login';
 
+// TokenManager.removeToken();
+
 class Auth extends React.Component {
   constructor(props) {
     super(props);
