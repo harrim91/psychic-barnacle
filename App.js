@@ -1,6 +1,7 @@
 import React from 'react';
 import Auth from './src/auth';
 import App from './src';
+import registerForPushNotificationsAsync from './src/lib/registerForPushNotifications';
 
 class Main extends React.Component {
   constructor(props) {
