@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "188765095555",
+    "firebase_url": "https://hackmcr2018.firebaseio.com",
+    "project_id": "hackmcr2018",
+    "storage_bucket": "hackmcr2018.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188765095555:android:552fcaaa6ad840ba",
+        "android_client_info": {
+          "package_name": "com.apk.psychicbarnacle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "188765095555-4ed9tl7saj7f8aaumvrtbkf77gmclh5q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDgsqrPrmSAeLzNRQLTtZS3Kl6qSnhmk8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
