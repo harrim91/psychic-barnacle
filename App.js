@@ -1,8 +1,33 @@
 import React from 'react';
-import Root from './src/components';
+import Auth from './src/auth';
+import App from './src';
+import registerForPushNotificationsAsync from './src/lib/registerForPushNotifications';
 
-const App = () => (
-  <Root text="Hello World" />
-);
+class Main extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: null,
+    };
 
-export default App;
+    this.handleSetUser = this.handleSetUser.bind(this);
+  }
+
+  handleSetUser(user) {
+    this.setState({ user });
+  }
+
+  render() {
+    const { user } = this.state;
+
+    if (user === null) {
+      return <Auth onSetUser={this.handleSetUser} />;
+    }
+
+    return (
+      <App user={user} />
+    );
+  }
+}
+
+export default () => <Main />;
