@@ -16,7 +16,7 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react-native/no-raw-text": 0,
     "react/jsx-one-expression-per-line": 0,
-    "react/prop-types": [2, { "ignore": ["children"] } ],
+    "react/prop-types": [2, { "ignore": ["children", "styles"] } ],
     "jsx-a11y/anchor-is-valid": ["error", { "components": [ "Link" ], "specialLink": ["onPress"] }]
   }
 }

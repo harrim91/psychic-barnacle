@@ -1,18 +1,30 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View, StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+const rootStyles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 
-const Container = ({ children }) => (
-  <View style={styles.container}>
+const Container = ({ children, styles }) => (
+  <View
+    style={[
+      rootStyles.container,
+      ...styles,
+    ]}
+  >
     {children}
   </View>
 );
+
+Container.propTypes = {
+  styles: PropTypes.arrayOf(PropTypes.number),
+};
+
+Container.defaultProps = {
+  styles: [],
+};
 
 export default Container;

@@ -15,6 +15,10 @@ const styles = StyleSheet.create({
   error: {
     color: colors.red,
   },
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 class SignUp extends React.Component {
@@ -69,7 +73,7 @@ class SignUp extends React.Component {
     const { user, error } = this.state;
     const { onViewChange } = this.props;
     return (
-      <Container>
+      <Container styles={[styles.container]}>
         <TextInput
           value={user.firstName}
           placeholder="First Name"
