@@ -1,6 +1,7 @@
 import { Permissions, Notifications } from 'expo';
 import axios from 'axios';
 import constants from '../constants';
+import TokenManager from './token-manager';
 
 const { API_URL } = constants;
 
@@ -28,13 +29,15 @@ async function registerForPushNotificationsAsync() {
   const token = await Notifications.getExpoPushTokenAsync();
 
   // POST the token to your backend server from where you can retrieve it to send push notifications.
-  axios.put(`${API_URL}/users/push-token`, {
-    token,
-  },
-  {
-    headers: {
-      Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YmQ0YTkyMTBmYmNiMDFiY2ZlMDBmZmUiLCJmaXJzdE5hbWUiOiJFcnNlbCIsImxhc3ROYW1lIjoiQWtlciIsImVtYWlsIjoiaGVsbG9AZXJzZWxha2VyLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJFZWdTJzSFFJNmRiL1cuNjFzUXgwYWUySVVvZmhJZ2dhV3pQNnlTQVRlYVM2ekdZTHVCUFNPIiwiX192IjowLCJpYXQiOjE1NDA2NjM1ODUsImV4cCI6MTU0MDgzNjM4NX0.TbUQ1MtQjfADiDSK9dL_CaAKQEyFDo4ER3d9ZqL5U5U',
+  TokenManager.getToken().then((jwt) => {
+    axios.put(`${API_URL}/users/push-token`, {
+      token,
     },
+    {
+      headers: {
+        Authorization: jwt,
+      },
+    });
   });
 }
 
