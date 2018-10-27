@@ -10,9 +10,6 @@ import {
 } from '../components';
 import TokenManager from '../lib/token-manager';
 import colors from '../components/colors';
-import constants from '../constants';
-
-const { API_URL } = constants;
 
 const styles = StyleSheet.create({
   error: {
@@ -53,6 +50,7 @@ class Login extends React.Component {
     const { onSetUser } = this.props;
     axios.post(`${API_URL}/auth/login`, user)
       .then((response) => {
+        axios.defaults.headers.common.Authorization = response.data.token;
         TokenManager.setToken(response.data.token)
           .then(() => TokenManager.getTokenPayload())
           .then(token => onSetUser(token));

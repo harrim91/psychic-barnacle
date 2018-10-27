@@ -1,9 +1,5 @@
 import { Permissions, Notifications } from 'expo';
 import axios from 'axios';
-import constants from '../constants';
-import TokenManager from './token-manager';
-
-const { API_URL } = constants;
 
 async function registerForPushNotificationsAsync() {
   const { status: existingStatus } = await Permissions.getAsync(
@@ -29,16 +25,7 @@ async function registerForPushNotificationsAsync() {
   const token = await Notifications.getExpoPushTokenAsync();
 
   // POST the token to your backend server from where you can retrieve it to send push notifications.
-  TokenManager.getToken().then((jwt) => {
-    axios.put(`${API_URL}/users/push-token`, {
-      token,
-    },
-    {
-      headers: {
-        Authorization: jwt,
-      },
-    });
-  });
+  axios.put('/users/push-token', { token });
 }
 
 export default registerForPushNotificationsAsync;

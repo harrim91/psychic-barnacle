@@ -8,8 +8,9 @@ import DatePicker from 'react-native-datepicker';
 import Select from 'react-native-picker-select';
 import Toaster from 'react-native-toaster';
 import { Notifications } from 'expo';
+import axios from 'axios';
 import registerForPushNotificationsAsync from './lib/registerForPushNotifications';
-import { Container } from './components';
+import { Container, Button } from './components';
 import stations from './data/stations';
 
 const styles = StyleSheet.create({
@@ -29,6 +30,7 @@ class App extends React.Component {
     };
 
     this.handleNotification = this.handleNotification.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -67,6 +69,15 @@ class App extends React.Component {
   handleChange(key, value) {
     this.setState({ [key]: value }, () => {
       console.log(this.state);
+    });
+  }
+
+  handleSubmit() {
+    const { start, end, time } = this.state;
+    axios.post('/journeys', {
+      start,
+      end,
+      time,
     });
   }
 
@@ -112,6 +123,7 @@ class App extends React.Component {
           confirmBtnText="Confirm"
           cancelBtnText="Cancel"
         />
+        <Button onPress={this.handleSubmit} text="Submit Journey" />
       </Container>
     );
   }

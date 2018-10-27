@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import TokenManager from '../lib/token-manager';
 import SignUp from './sign-up';
 import Login from './login';
@@ -19,7 +20,13 @@ class Auth extends React.Component {
     const { onSetUser } = this.props;
     TokenManager.isTokenValid().then((isValid) => {
       if (isValid) {
-        TokenManager.getTokenPayload().then(onSetUser);
+        Promise.all([
+          TokenManager.getToken(),
+          TokenManager.getTokenPayload(),
+        ]).then(([token, user]) => {
+          axios.defaults.headers.common.Authorization = token;
+          onSetUser(user);
+        });
       }
     });
   }

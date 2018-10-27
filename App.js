@@ -1,7 +1,10 @@
 import React from 'react';
+import axios from 'axios'
 import Auth from './src/auth';
 import App from './src';
-import registerForPushNotificationsAsync from './src/lib/registerForPushNotifications';
+
+axios.defaults.baseURL = 'https://hackmcr-2018-api.herokuapp.com';
+axios.defaults.headers.common['Content-Type'] = 'application/json';
 
 class Main extends React.Component {
   constructor(props) {
