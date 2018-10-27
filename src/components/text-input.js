@@ -16,6 +16,6 @@ const TextInput = props => (
   <RNTextInput {...props} style={styles.textInput} />
 );
 
-TextInput.propTypes = RNTextInput.propTypes;
+TextInput.propTypes = { ...RNTextInput.propTypes };
 
 export default TextInput;

@@ -2,8 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TokenManager from '../lib/token-manager';
 import SignUp from './sign-up';
+import Login from './login';
 
 class Auth extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { viewLogin: true };
+
+    this.handleViewChange = this.handleViewChange.bind(this);
+  }
+
   componentDidMount() {
     const { onSetUser } = this.props;
     TokenManager.isTokenValid().then((isValid) => {
@@ -13,10 +22,28 @@ class Auth extends React.Component {
     });
   }
 
+  handleViewChange() {
+    this.setState(state => ({ viewLogin: !state.viewLogin }));
+  }
+
   render() {
     const { onSetUser } = this.props;
+    const { viewLogin } = this.state;
+
+    if (viewLogin) {
+      return (
+        <Login
+          onSetUser={onSetUser}
+          onViewChange={this.handleViewChange}
+        />
+      );
+    }
+
     return (
-      <SignUp onSetUser={onSetUser} />
+      <SignUp
+        onSetUser={onSetUser}
+        onViewChange={this.handleViewChange}
+      />
     );
   }
 }

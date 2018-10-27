@@ -2,12 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Text, StyleSheet } from 'react-native';
 import axios from 'axios';
-import { Button, Container, TextInput } from '../components';
+import {
+  Button,
+  Container,
+  TextInput,
+  Link,
+} from '../components';
 import TokenManager from '../lib/token-manager';
+import colors from '../components/colors';
 
 const styles = StyleSheet.create({
   error: {
-    color: 'red',
+    color: colors.red,
   },
 });
 
@@ -53,7 +59,7 @@ class SignUp extends React.Component {
           user: { ...state.user, password: '' },
         }), () => {
           setTimeout(() => {
-            this.setState({error: '' });
+            this.setState({ error: '' });
           }, 5000);
         });
       });
@@ -61,6 +67,7 @@ class SignUp extends React.Component {
 
   render() {
     const { user, error } = this.state;
+    const { onViewChange } = this.props;
     return (
       <Container>
         <TextInput
@@ -92,6 +99,7 @@ class SignUp extends React.Component {
           autoCapitalize="none"
         />
         <Button text="Sign Up" onPress={this.handleSubmit} />
+        <Link text="or login" onPress={onViewChange} />
         {error && <Text style={styles.error}>{error}</Text>}
       </Container>
     );
@@ -100,6 +108,7 @@ class SignUp extends React.Component {
 
 SignUp.propTypes = {
   onSetUser: PropTypes.func.isRequired,
+  onViewChange: PropTypes.func.isRequired,
 };
 
 export default SignUp;
