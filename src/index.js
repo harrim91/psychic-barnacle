@@ -4,10 +4,11 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
+import { Notifications } from 'expo';
 import DatePicker from 'react-native-datepicker';
 import Select from 'react-native-picker-select';
 import Toaster from 'react-native-toaster';
-import { Notifications } from 'expo';
+import moment from 'moment';
 import axios from 'axios';
 import registerForPushNotificationsAsync from './lib/registerForPushNotifications';
 import { Container, Button } from './components';
@@ -16,6 +17,9 @@ import stations from './data/stations';
 const styles = StyleSheet.create({
   container: {
     paddingTop: 30,
+  },
+  datePicker: {
+    width: '100%',
   },
 });
 
@@ -77,18 +81,22 @@ class App extends React.Component {
     axios.post('/journeys', {
       start,
       end,
-      time,
+      time: moment(time).utc().unix(),
     });
   }
 
   render() {
-    const { user } = this.props;
-    const { start, end, time, notification } = this.state;
+    const {
+      start,
+      end,
+      time,
+      notification,
+    } = this.state;
 
     return (
       <Container styles={[styles.container]}>
         {notification ? (<Toaster message={notification} />) : null}
-        <Text>Hello {user.firstName}</Text>
+        <Text>Add Journey</Text>
         <Text>From:</Text>
         <Select
           hideDoneBar
@@ -115,7 +123,7 @@ class App extends React.Component {
         />
         <Text>Time:</Text>
         <DatePicker
-          style={{ width: '100%' }}
+          style={styles.datePicker}
           mode="datetime"
           date={time}
           placeholder="Select journey time"
