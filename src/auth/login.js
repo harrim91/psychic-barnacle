@@ -10,6 +10,9 @@ import {
 } from '../components';
 import TokenManager from '../lib/token-manager';
 import colors from '../components/colors';
+import constants from '../constants';
+
+const { API_URL } = constants;
 
 const styles = StyleSheet.create({
   error: {
@@ -48,7 +51,7 @@ class Login extends React.Component {
   handleSubmit() {
     const { user } = this.state;
     const { onSetUser } = this.props;
-    axios.post('https://hackmcr-2018-api.herokuapp.com/auth/login', user)
+    axios.post(`${API_URL}/auth/login`, user)
       .then((response) => {
         TokenManager.setToken(response.data.token)
           .then(() => TokenManager.getTokenPayload())
@@ -90,7 +93,7 @@ class Login extends React.Component {
         />
         <Button text="Login" onPress={this.handleSubmit} />
         <Link text="or sign up" onPress={onViewChange} />
-        {error && <Text style={styles.error}>{error}</Text>}
+        {error ? <Text style={styles.error}>{error}</Text> : null}
       </Container>
     );
   }
