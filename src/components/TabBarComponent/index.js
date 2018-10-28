@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, Platform } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import {
   Footer, FooterTab, Button, Icon,
 } from 'native-base';
@@ -36,8 +37,12 @@ const CustomTabBar = ({ navigation }) => (
               }}
               key={key}
             >
-              {routeName === 'LovedOnes' ? (<Icon style={{ color: color.color }} name="heart" />) : (
-                <Text style={{ color: color.color, fontWeight }}>{parseRouteName(routeName)}</Text>)}
+              {routeName === 'LovedOnes' ? (Platform.select({
+                android: <Icon style={{ color: color.color }} name="heart" />,
+                ios: <Ionicons color={color.color} name="ios-heart" />,
+              })) : (
+                <Text style={{ color: color.color, fontWeight }}>{parseRouteName(routeName)}</Text>
+              )}
 
             </Button>
           );

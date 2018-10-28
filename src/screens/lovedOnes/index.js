@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'
 import { Contacts, Permissions } from 'expo';
 import {
   Container, Header, Content, Form, Icon, Picker, Textarea, Button
@@ -73,7 +74,7 @@ class LovedOnes extends React.Component {
             <Text style={{padding: 10, fontSize: 15}}>Select up to 3 contacts whom you would like to send an automatic SMS when your planned train journeys are running late.</Text>
             <Picker
               mode="dropdown"
-              iosIcon={<Icon name="ios-arrow-down-outline" />}
+              iosIcon={<Ionicons name="ios-arrow-down" />}
               placeholder="Select your first contact"
               placeholderStyle={{ color: '#bfc6ea' }}
               placeholderIconColor="#007aff"
@@ -88,7 +89,7 @@ class LovedOnes extends React.Component {
             </Picker>
             <Picker
               mode="dropdown"
-              iosIcon={<Icon name="ios-arrow-down-outline" />}
+              iosIcon={<Ionicons name="ios-arrow-down" />}
               placeholder="Select your second contact"
               placeholderStyle={{ color: '#bfc6ea' }}
               placeholderIconColor="#007aff"
@@ -103,7 +104,7 @@ class LovedOnes extends React.Component {
             </Picker>
             <Picker
               mode="dropdown"
-              iosIcon={<Icon name="ios-arrow-down-outline" />}
+              iosIcon={<Ionicons name="ios-arrow-down" />}
               placeholder="Select your third contact"
               placeholderStyle={{ color: '#bfc6ea' }}
               placeholderIconColor="#007aff"

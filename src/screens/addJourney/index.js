@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, Platform } from 'react-native';
 import moment from 'moment';
 import axios from 'axios';
 import DatePicker from 'react-native-datepicker';
@@ -14,6 +14,14 @@ const styles = StyleSheet.create({
   datePicker: {
     width: '100%',
   },
+  header: Platform.select({
+    android: {
+      flex: 1, justifyContent: 'center', alignItems: 'center', fontSize: 25, color: '#fff', padding: 10,
+    },
+    ios: {
+      flex: 1, justifyContent: 'center', alignItems: 'center', fontSize: 25, color: '#000', padding: 10,
+    },
+  }),
 });
 
 class AddJourney extends React.Component {
@@ -77,9 +85,7 @@ class AddJourney extends React.Component {
     return (
       <Container>
         <Header>
-          <Text style={{
-            flex: 1, justifyContent: 'center', alignItems: 'center', fontSize: 25, color: '#fff', padding: 10,
-          }}
+          <Text style={styles.header}
           >Track My Journey
           </Text>
         </Header>
