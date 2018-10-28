@@ -4,6 +4,12 @@ import { SecureStore } from 'expo';
 
 const KEY = 'api-token';
 
+const saveData = (myKey, myValue) => {
+  console.log(typeof myValue, myKey);
+  return SecureStore.setItemAsync(myKey, myValue);
+};
+const getData = myKey => SecureStore.getItemAsync(myKey);
+
 const setToken = token => SecureStore.setItemAsync(KEY, token);
 
 const getToken = () => SecureStore.getItemAsync(KEY);
@@ -26,4 +32,6 @@ export default {
   getTokenPayload,
   isTokenValid,
   removeToken,
+  saveData,
+  getData,
 };
