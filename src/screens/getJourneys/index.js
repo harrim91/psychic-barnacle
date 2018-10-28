@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, ScrollView } from 'react-native';
+import { Text, ScrollView, TouchableOpacity } from 'react-native';
 import {
   List, ListItem, Body, Right, Button,
 } from 'native-base';
@@ -42,6 +42,7 @@ class GetJourneys extends React.Component {
     axios.get('/journeys')
       .then((response) => {
         const journeys = response.data;
+
         this.setState({ journeys });
       })
       .catch(e => console.log(e));
@@ -49,6 +50,7 @@ class GetJourneys extends React.Component {
 
   render() {
     const { journeys } = this.state;
+    const { navigation } = this.props;
 
     return (
       <ScrollView>
@@ -62,7 +64,13 @@ class GetJourneys extends React.Component {
               const aimedTime = new moment(aimedDeparture, 'HH:mm');
               const expectedTime = new moment(expectedDeparture, 'HH:mm');
 
-              if (aimedTime.isBefore(expectedTime)) {
+              if (!journey.departures) {
+                status = 'Unknown';
+              } else if (journey.departures.all.length === 0 || moment.unix(journey.time).isBefore(aimedTime)) {
+                status = 'Departed';
+              } else if (journey.departures.all[0].status === 'BUS') {
+                status = 'Bus';
+              } else if (aimedTime.isBefore(expectedTime)) {
               // early
                 status = 'On Time';
               } else if (aimedTime.isSame(expectedTime)) {
@@ -76,12 +84,12 @@ class GetJourneys extends React.Component {
             }
 
             return (
-              <ListItem
-                key={journey._id}
-              >
+              <ListItem key={journey._id}>
                 <Body>
-                  <Text>{getFriendlyJourneyLabel(journey.start, journey.end)}</Text>
-                  <Text note numberOfLines={2}>{getFriendlyTimeLabel(journey.time)}</Text>
+                  <TouchableOpacity onPress={() => navigation.navigate('JourneyDetails', { id: journey._id, status })}>
+                    <Text>{getFriendlyJourneyLabel(journey.start, journey.end)}</Text>
+                    <Text note numberOfLines={2}>{getFriendlyTimeLabel(journey.time)}</Text>
+                  </TouchableOpacity>
                 </Body>
                 <Right>
                   <Button transparent>

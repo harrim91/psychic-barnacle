@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import axios from 'axios';
 import { createBottomTabNavigator } from 'react-navigation';
 import {
-  AddJourney, Login, SignUp, GetJourneys,
+  AddJourney, Login, SignUp, GetJourneys, JourneyDetails,
 } from './src/screens';
 import { Container, PushNotifications, TabBarComponent } from './src/components';
 
@@ -28,6 +28,9 @@ const RootStack = createBottomTabNavigator({
   },
   SignUp: {
     screen: SignUp,
+  },
+  JourneyDetails: {
+    screen: JourneyDetails,
   },
 },
 {

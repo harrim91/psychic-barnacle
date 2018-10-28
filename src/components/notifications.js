@@ -24,8 +24,9 @@ class PushNotifications extends React.Component {
   }
 
   handleNotification(notification) {
+    console.log(notification);
     const customNotification = {
-      text: notification.body,
+      text: notification.data.body,
       styles: {
         container: {
           paddingTop: 40,
