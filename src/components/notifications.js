@@ -24,11 +24,8 @@ class PushNotifications extends React.Component {
   }
 
   handleNotification(notification) {
-    // todo: read notifications
-    console.log(notification);
-
     const customNotification = {
-      text: 'Some notification has been received',
+      text: notification.body,
       styles: {
         container: {
           paddingTop: 40,

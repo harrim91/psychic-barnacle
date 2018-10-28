@@ -16,7 +16,12 @@ const CustomTabBar = ({ navigation }) => (
       {navigation.state.routes
         .filter(({ routeName }) => !FILTERED_TABS.includes(routeName))
         .map(({ routeName, key }) => (
-          <Button key={key}>
+          <Button
+            onPress={() => {
+              navigation.navigate(key);
+            }}
+            key={key}
+          >
             <Text style={styles.label}>{parseRouteName(routeName)}</Text>
           </Button>
         ))}
