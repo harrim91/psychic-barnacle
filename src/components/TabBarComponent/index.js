@@ -1,10 +1,15 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, Platform } from 'react-native';
 import { Footer, FooterTab, Button } from 'native-base';
 import colors from '../colors';
 
 const styles = StyleSheet.create({
-  label: { color: colors.grey },
+  label: {
+    ...Platform.select({
+      android: { color: colors.grey },
+      ios: { color: colors.black },
+    }),
+  },
 });
 
 const FILTERED_TABS = ['Login', 'SignUp'];
