@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import moment from 'moment';
 import axios from 'axios';
 import DatePicker from 'react-native-datepicker';
 import Select from 'react-native-picker-select';
-import { Button } from '../../components';
+import {
+  Container, Content, Header, Button,
+} from 'native-base';
 import stations from '../../data/stations';
 import operators from '../../data/operators';
 
@@ -73,57 +75,65 @@ class AddJourney extends React.Component {
     } = this.state;
 
     return (
-      <View>
-        <Text>Add Journey</Text>
-        <Text>From:</Text>
-        <Select
-          hideDoneBar
-          placeholder={{ label: 'Select start station', value: null }}
-          items={stations.map(({ name, code }) => ({
-            key: code,
-            label: `${name} (${code})`,
-            value: code,
-          }))}
-          value={start}
-          onValueChange={value => this.handleChange('start', value)}
-        />
-        <Text>To:</Text>
-        <Select
-          hideDoneBar
-          placeholder={{ label: 'Select end station', value: null }}
-          items={stations.map(({ name, code }) => ({
-            key: code,
-            label: `${name} (${code})`,
-            value: code,
-          }))}
-          value={end}
-          onValueChange={value => this.handleChange('end', value)}
-        />
-        <Text>Time:</Text>
-        <DatePicker
-          style={styles.datePicker}
-          mode="datetime"
-          date={time}
-          placeholder="Select journey time"
-          onDateChange={value => this.handleChange('time', value)}
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-        />
-        <Text>Operator:</Text>
-        <Select
-          hideDoneBar
-          placeholder={{ label: 'Select operator', value: null }}
-          items={operators.map(({ name, code }) => ({
-            key: code,
-            label: name,
-            value: code,
-          }))}
-          value={operator}
-          onValueChange={value => this.handleChange('operator', value)}
-        />
-        <Button onPress={this.handleSubmit} text="Submit Journey" />
-        {message ? <Text>{message}</Text> : null}
-      </View>
+      <Container>
+        <Header>
+          <Text style={{
+            flex: 1, justifyContent: 'center', alignItems: 'center', fontSize: 25, color: '#fff', padding: 10,
+          }}
+          >Track My Journey
+          </Text>
+        </Header>
+        <Content>
+          <Text>From:</Text>
+          <Select
+            hideDoneBar
+            placeholder={{ label: 'Select start station', value: null }}
+            items={stations.map(({ name, code }) => ({
+              key: code,
+              label: `${name} (${code})`,
+              value: code,
+            }))}
+            value={start}
+            onValueChange={value => this.handleChange('start', value)}
+          />
+          <Text>To:</Text>
+          <Select
+            hideDoneBar
+            placeholder={{ label: 'Select end station', value: null }}
+            items={stations.map(({ name, code }) => ({
+              key: code,
+              label: `${name} (${code})`,
+              value: code,
+            }))}
+            value={end}
+            onValueChange={value => this.handleChange('end', value)}
+          />
+          <Text>Time:</Text>
+          <DatePicker
+            style={styles.datePicker}
+            mode="datetime"
+            date={time}
+            placeholder="Select journey time"
+            onDateChange={value => this.handleChange('time', value)}
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+          />
+          <Text>Operator:</Text>
+          <Select
+            hideDoneBar
+            placeholder={{ label: 'Select operator', value: null }}
+            items={operators.map(({ name, code }) => ({
+              key: code,
+              label: name,
+              value: code,
+            }))}
+            value={operator}
+            onValueChange={value => this.handleChange('operator', value)}
+          />
+          <Button full onPress={this.handleSubmit}><Text style={{ color: '#fff' }}>Save</Text></Button>
+          {message ? <Text>{message}</Text> : null}
+        </Content>
+      </Container>
     );
   }
 }
