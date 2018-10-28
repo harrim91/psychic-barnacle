@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import axios from 'axios';
 import { createBottomTabNavigator } from 'react-navigation';
 import { AddJourney, Login, SignUp } from './src/screens';
-import { Container, PushNotifications } from './src/components';
+import { Container, PushNotifications, TabBarComponent } from './src/components';
 
 axios.defaults.baseURL = 'https://hackmcr-2018-api.herokuapp.com';
 axios.defaults.headers.common['Content-Type'] = 'application/json';
@@ -27,6 +27,7 @@ const RootStack = createBottomTabNavigator({
 },
 {
   initialRouteName: 'Login',
+  tabBarComponent: ({ navigation }) => <TabBarComponent navigation={navigation} />,
 });
 
 const Main = () => (
