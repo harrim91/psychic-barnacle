@@ -13,8 +13,7 @@ import axios from 'axios';
 import registerForPushNotificationsAsync from './lib/registerForPushNotifications';
 import { Container, Button } from './components';
 import stations from './data/stations';
-
-const operators = [{ name: 'Virgin Trains', code: 'VT' }];
+import operators from './data/operators';
 
 const styles = StyleSheet.create({
   container: {
