@@ -14,7 +14,7 @@ class LovedOnes extends React.Component {
       selectedContact1: 'not-selected-na',
       selectedContact2: 'not-selected-na',
       selectedContact3: 'not-selected-na',
-      message: ''
+      message: `Train is delayed. I'll be late.`
     };
   }
 

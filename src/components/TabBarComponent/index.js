@@ -1,6 +1,8 @@
 import React from 'react';
 import { Text, StyleSheet, Platform } from 'react-native';
-import { Footer, FooterTab, Button } from 'native-base';
+import {
+  Footer, FooterTab, Button, Icon,
+} from 'native-base';
 import colors from '../colors';
 
 const styles = StyleSheet.create({
@@ -20,16 +22,32 @@ const CustomTabBar = ({ navigation }) => (
     <FooterTab>
       {navigation.state.routes
         .filter(({ routeName }) => !FILTERED_TABS.includes(routeName))
-        .map(({ routeName, key }) => (
-          <Button
-            onPress={() => {
-              navigation.navigate(key);
-            }}
-            key={key}
-          >
-            <Text style={styles.label}>{parseRouteName(routeName)}</Text>
-          </Button>
-        ))}
+        .map(({ routeName, key }) => {
+          // const last = navigation.state.routes[0].routes.length - 1;
+          //  = navigation.state.routes[0].routes[last].routeName;
+          const curentScreen = navigation.state.index;
+          const currentRouteName = navigation.state.routes[curentScreen].routeName;
+          let color = '#fff';
+          let fontWeight = 'normal';
+
+          if (currentRouteName === routeName) {
+            color = '#660000';
+            fontWeight = 'bold';
+          }
+
+          return (
+            <Button
+              onPress={() => {
+                navigation.navigate(key);
+              }}
+              key={key}
+            >
+              {routeName === 'LovedOnes' ? (<Icon style={{ color }} name="heart" />) : (
+                <Text style={{ color, fontWeight }}>{parseRouteName(routeName)}</Text>)}
+
+            </Button>
+          );
+        })}
     </FooterTab>
   </Footer>
 );
