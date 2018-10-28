@@ -9,9 +9,6 @@ import stations from '../../data/stations';
 import operators from '../../data/operators';
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 30,
-  },
   datePicker: {
     width: '100%',
   },
@@ -25,6 +22,7 @@ class AddJourney extends React.Component {
       end: null,
       time: null,
       operator: null,
+      message: '',
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -46,12 +44,32 @@ class AddJourney extends React.Component {
       end,
       operator,
       time: moment(time).utc().unix(),
+    }).then(() => {
+      this.setState({
+        start: null,
+        end: null,
+        time: null,
+        operator: null,
+        message: 'Journey Added Successfully',
+      }, () => {
+        setTimeout(() => {
+          this.setState({ message: '' });
+        }, 5000);
+      });
+    }).catch(() => {
+      this.setState({
+        message: 'Something went wrong',
+      }, () => {
+        setTimeout(() => {
+          this.setState({ message: '' });
+        }, 5000);
+      });
     });
   }
 
   render() {
     const {
-      start, end, time, operator,
+      start, end, time, operator, message,
     } = this.state;
 
     return (
@@ -104,6 +122,7 @@ class AddJourney extends React.Component {
           onValueChange={value => this.handleChange('operator', value)}
         />
         <Button onPress={this.handleSubmit} text="Submit Journey" />
+        {message ? <Text>{message}</Text> : null}
       </View>
     );
   }
