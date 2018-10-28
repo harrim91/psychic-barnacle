@@ -86,7 +86,7 @@ class GetJourneys extends React.Component {
             return (
               <ListItem key={journey._id}>
                 <Body>
-                  <TouchableOpacity onPress={() => navigation.navigate('JourneyDetails', { id: journey._id, status })}>
+                  <TouchableOpacity onPress={() => ['Unknown', 'Departed'].includes(status) || navigation.navigate('JourneyDetails', { id: journey._id, status })}>
                     <Text>{getFriendlyJourneyLabel(journey.start, journey.end)}</Text>
                     <Text note numberOfLines={2}>{getFriendlyTimeLabel(journey.time)}</Text>
                   </TouchableOpacity>
