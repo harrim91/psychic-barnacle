@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Text, StyleSheet } from 'react-native';
 import axios from 'axios';
 import {
@@ -7,9 +6,9 @@ import {
   Container,
   Link,
   TextInput,
-} from '../components';
-import TokenManager from '../lib/token-manager';
-import colors from '../components/colors';
+} from '../../components';
+import TokenManager from '../../lib/token-manager';
+import colors from '../../components/colors';
 
 const styles = StyleSheet.create({
   error: {
@@ -36,6 +35,20 @@ class Login extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    const { navigation: { navigate } } = this.props;
+
+    TokenManager.isTokenValid().then((isValid) => {
+      if (isValid) {
+        TokenManager.getToken()
+          .then((token) => {
+            axios.defaults.headers.common.Authorization = token;
+            navigate('AddJourney');
+          });
+      }
+    });
+  }
+
   handleChange(key, value) {
     this.setState(state => ({
       user: {
@@ -45,15 +58,17 @@ class Login extends React.Component {
     }));
   }
 
+
   handleSubmit() {
     const { user } = this.state;
-    const { onSetUser } = this.props;
-    axios.post(`${API_URL}/auth/login`, user)
+    const { navigation: { navigate } } = this.props;
+
+    axios.post('/auth/login', user)
       .then((response) => {
         axios.defaults.headers.common.Authorization = response.data.token;
         TokenManager.setToken(response.data.token)
           .then(() => TokenManager.getTokenPayload())
-          .then(token => onSetUser(token));
+          .then(() => navigate('AddJourney'));
       })
       .catch((e) => {
         console.log(e);
@@ -70,7 +85,8 @@ class Login extends React.Component {
 
   render() {
     const { user, error } = this.state;
-    const { onViewChange } = this.props;
+    const { navigation: { navigate } } = this.props;
+
     return (
       <Container styles={[styles.container]}>
         <TextInput
@@ -90,16 +106,11 @@ class Login extends React.Component {
           autoCapitalize="none"
         />
         <Button text="Login" onPress={this.handleSubmit} />
-        <Link text="or sign up" onPress={onViewChange} />
+        <Link text="or sign up" onPress={() => navigate('SignUp')} />
         {error ? <Text style={styles.error}>{error}</Text> : null}
       </Container>
     );
   }
 }
-
-Login.propTypes = {
-  onSetUser: PropTypes.func.isRequired,
-  onViewChange: PropTypes.func.isRequired,
-};
 
 export default Login;
