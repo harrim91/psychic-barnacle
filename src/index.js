@@ -14,6 +14,8 @@ import registerForPushNotificationsAsync from './lib/registerForPushNotification
 import { Container, Button } from './components';
 import stations from './data/stations';
 
+const operators = [{ name: 'Virgin Trains', code: 'VT' }];
+
 const styles = StyleSheet.create({
   container: {
     paddingTop: 30,
@@ -30,6 +32,7 @@ class App extends React.Component {
       start: null,
       end: null,
       time: null,
+      operator: null,
       notification: null,
     };
 
@@ -71,16 +74,20 @@ class App extends React.Component {
   }
 
   handleChange(key, value) {
-    this.setState({ [key]: value }, () => {
-      console.log(this.state);
-    });
+    this.setState({ [key]: value });
   }
 
   handleSubmit() {
-    const { start, end, time } = this.state;
+    const {
+      start,
+      end,
+      time,
+      operator,
+    } = this.state;
     axios.post('/journeys', {
       start,
       end,
+      operator,
       time: moment(time).utc().unix(),
     });
   }
@@ -90,6 +97,7 @@ class App extends React.Component {
       start,
       end,
       time,
+      operator,
       notification,
     } = this.state;
 
@@ -130,6 +138,18 @@ class App extends React.Component {
           onDateChange={value => this.handleChange('time', value)}
           confirmBtnText="Confirm"
           cancelBtnText="Cancel"
+        />
+        <Text>Operator:</Text>
+        <Select
+          hideDoneBar
+          placeholder={{ label: 'Select operator', value: null }}
+          items={operators.map(({ name, code }) => ({
+            key: code,
+            label: name,
+            value: code,
+          }))}
+          value={operator}
+          onValueChange={value => this.handleChange('operator', value)}
         />
         <Button onPress={this.handleSubmit} text="Submit Journey" />
       </Container>
