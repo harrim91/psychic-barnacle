@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text } from 'native-base';
+import { ScrollView } from 'react-native';
+import { View, Text, List, ListItem, Body } from 'native-base';
 import axios from 'axios';
 import stations from '../../data/stations';
 
@@ -41,6 +42,8 @@ class JourneyDetails extends React.Component {
   render() {
     const { navigation } = this.props;
     const { message, journey } = this.state;
+    console.log(journey);
+
     if (journey === null) {
       return (
         <View>
@@ -51,11 +54,27 @@ class JourneyDetails extends React.Component {
     const start = stations.find(station => station.code === journey.start).name;
     const end = stations.find(station => station.code === journey.end).name;
     return (
-      <View>
+      <ScrollView>
         <Text>Journey: {start} - {end}</Text>
         <Text>Status: {getStatus(navigation.getParam('status'))}</Text>
-
-      </View>
+        <Text>Operator: {journey.departure.operator}</Text>
+        <Text>Platform: {journey.departure.platform || 'Unknown'}</Text>
+        <Text>Expected Departure: {journey.departure.expectedDeparture || 'Unknown'}</Text>
+        <Text>Expected Arrival: {journey.departure.expectedArrival || 'Unknown'}</Text>
+        <Text>Alternate Routes:</Text>
+        <List>
+          {journey.alternateRoutes.map((route, i)=> (
+            <ListItem key={i}>
+              <Body>
+                <Text>Duration: {route.duration}</Text>
+                <Text>Depart: {route.departureTime}</Text>
+                <Text>Arrive: {route.arrivalTime}</Text>
+                <Text>Modes: {route.modes.join(', ')}</Text>
+              </Body>
+            </ListItem>
+          ))}
+        </List>
+      </ScrollView>
     );
   }
 }
